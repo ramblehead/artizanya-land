@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "checkJs": true,
+    "allowJs": true,
+    // "maxNodeModuleJsDepth": 50,
+    "module": "commonjs",
+    "target": "es2015",
+    "lib": [
+      "es2017",
+      "esnext.asynciterable"
+    ],
+    "moduleResolution": "node",
+    // "allowSyntheticDefaultImports": true,
+    // "noEmit": true,
+    "newLine": "lf",
+    // "watch": true,
+    "outDir": "build"
+  },
+  "include": [
+    "src/**/*.ts",
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

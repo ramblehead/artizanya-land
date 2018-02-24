@@ -1,2 +1,1 @@
-# artizanya-land
-The Land of Artizans
+# ArangoDB FOXX services in Typescript from Emacs
