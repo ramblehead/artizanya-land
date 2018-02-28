@@ -1,4 +1,4 @@
-// -*- coding: utf-8; mode: typescript; eval: (rh-setup "foxx-ts") -*-
+// -*- coding: utf-8; mode: typescript -*-
 
 // The graphql-sync module is a thin wrapper around graphql-js
 // which provides an identical API except it doesn't use promises

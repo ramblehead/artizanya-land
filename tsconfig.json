@@ -14,12 +14,15 @@
     // "noEmit": true,
     "newLine": "lf",
     // "watch": true,
-    "outDir": "build"
+    "rootDir": "./src",
+    "outDir": "./build"
   },
   "include": [
     "src/**/*.ts",
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "build",
+    "dist"
   ]
 }

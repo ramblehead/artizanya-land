@@ -9,10 +9,12 @@
     "url": "git+https://github.com/ramblehead/artizanya-land.git"
   },
   "scripts": {
+    "compile": "tsc",
     "test": "echo \"Error: no test specified yet\" && exit 1"
   },
   "dependencies": {
-    "graphql-sync": "file:../../../../usr/share/arangodb3/js/node/node_modules/graphql-sync"
+    "graphql-sync": "file:../../../../usr/share/arangodb3/js/node/node_modules/graphql-sync",
+    "graphql-tools": "file:../graphql-tools-sync"
   },
   "devDependencies": {
     "@types/joi": "^9.0.32",
