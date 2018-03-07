@@ -1,9 +1,27 @@
 ;; -*- coding: utf-8 -*-
 
+(set (make-local-variable 'tide-tsserver-executable)
+     (concat (rh-project-get-root) "node_modules/.bin/tsserver"))
+
+(set (make-local-variable 'tern-command)
+     (list (concat (rh-project-get-root) "node_modules/.bin/tern")))
+
+(set (make-local-variable 'rh-tern-argument-hints-enabled) nil)
+
+;; TODO: Test NODE_PATH and only add missing paths instead
+;;       of overwriting all.
+;; node.js arangodb require paths for tern
+(setenv "NODE_PATH"
+        (concat "/usr/share/arangodb3/js/common/modules:"
+                "/usr/share/arangodb3/js/server/modules"))
+
 (let ((project-root (rh-project-get-root))
       file-rpath)
   (when project-root
     (setq file-rpath (file-relative-name buffer-file-name project-root))
-    (cond ((string-match-p "src/.+\\.d\\.ts$" file-rpath) nil)
-          ((string-match-p "src/.+\\.ts$" file-rpath)
-           (rh-project-setup "ts-foxx")))))
+    (cond ((string-match-p "\\.ts\\'\\|\\.tsx\\'" file-rpath)
+           (rh-typescript-setup)
+           (tern-mode 1))
+          ((string-match-p "\\.js\\'" file-rpath)
+           (rh-javascript-setup)
+           (tern-mode 1)))))
