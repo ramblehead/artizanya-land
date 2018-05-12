@@ -1,4 +1,4 @@
-// -*- coding: utf-8; mode: typescript -*-
+// -*- coding: utf-8 -*-
 
 // The graphql-sync module is a thin wrapper around graphql-js
 // which provides an identical API except it doesn't use promises
@@ -314,8 +314,6 @@ const queryType = new gql.GraphQLObjectType({
     };
   }
 });
-// eval: (rh-project-setup "foxx-ide")
-
 
 // This is the GraphQL schema object we need to execute
 // queries. See "controller.js" for an example of how it
