@@ -6,7 +6,10 @@
 (set (make-local-variable 'tern-command)
      (list (concat (rh-project-get-root) "node_modules/.bin/tern")))
 
-(set (make-local-variable 'rh-tern-argument-hints-enabled) nil)
+(set (make-local-variable 'flycheck-typescript-tslint-executable)
+     (concat (rh-project-get-root) "node_modules/.bin/tslint"))
+
+;; (set (make-local-variable 'rh-tern-argument-hints-enabled) nil)
 
 ;; TODO: Test NODE_PATH and only add missing paths instead
 ;;       of overwriting all.
@@ -20,8 +23,9 @@
   (when project-root
     (setq file-rpath (file-relative-name buffer-file-name project-root))
     (cond ((string-match-p "\\.ts\\'\\|\\.tsx\\'" file-rpath)
-           (rh-typescript-setup)
-           (tern-mode 1))
-          ((string-match-p "\\.js\\'" file-rpath)
-           (rh-javascript-setup)
-           (tern-mode 1)))))
+           (rh-typescript-setup))
+          ((or (string-match-p "^#!.*node" (save-excursion
+                                             (goto-char (point-min))
+                                             (thing-at-point 'line t)))
+               (string-match-p "\\.js\\'" file-rpath))
+           (rh-javascript-setup)))))

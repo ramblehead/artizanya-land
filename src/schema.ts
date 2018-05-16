@@ -1,15 +1,6 @@
 // -*- coding: utf-8 -*-
 
-// The graphql-sync module is a thin wrapper around graphql-js
-// which provides an identical API except it doesn't use promises
-// and instead always resolves synchronously. This allows us to
-// use it in Foxx (which doesn't support async resolution).
-import * as  gql from 'graphql-sync';
-
-// If you want to use graphql-sync in your own Foxx services
-// make sure to install it in the Foxx service's folder using
-// the "npm" command-line tool and to include the "node_modules"
-// folder when bundling your Foxx service for deployment. x
+import * as graphql from 'graphql';
 import { db, aql } from '@arangodb';
 
 // Using module.context.collection allows us to use the
@@ -27,7 +18,7 @@ let droidType, humanType, characterInterface;
 // GraphQL ENUM values can be used as literals rather
 // than strings but their possible values have to be
 // statically defined.
-const speciesType = new gql.GraphQLEnumType({
+const speciesType = new graphql.GraphQLEnumType({
   name: 'Species',
   description: 'Species of a character: human or droid.',
   values: {
@@ -46,13 +37,13 @@ const speciesType = new gql.GraphQLEnumType({
 // are defined using a GraphQL ENUM type. Because we're
 // in a database, it makes more sense to define them
 // as an object type backed by a collection.
-const episodeType = new gql.GraphQLObjectType({
+const episodeType = new graphql.GraphQLObjectType({
   name: 'Episode',
   description: 'An episode in the Star Wars Trilogy.',
   fields() {
     return {
       id: {
-        type: new gql.GraphQLNonNull(gql.GraphQLString),
+        type: new graphql.GraphQLNonNull(graphql.GraphQLString),
         description: 'The id of the episode.',
         resolve(episode) {
           // The objects exposed by GraphQL have an "id"
@@ -68,36 +59,36 @@ const episodeType = new gql.GraphQLObjectType({
       // on the documents and thus don't need "resolve"
       // methods.
       title: {
-        type: gql.GraphQLString,
+        type: graphql.GraphQLString,
         description: 'The title of the episode.'
       },
       description: {
-        type: gql.GraphQLString,
+        type: graphql.GraphQLString,
         description: 'The description of the episode.'
       }
     };
   }
 });
 
-characterInterface = new gql.GraphQLInterfaceType({
+characterInterface = new graphql.GraphQLInterfaceType({
   name: 'Character',
   description: 'A character in the Star Wars Trilogy',
   fields() {
     return {
       id: {
-        type: new gql.GraphQLNonNull(gql.GraphQLString),
+        type: new graphql.GraphQLNonNull(graphql.GraphQLString),
         description: 'The id of the character.'
       },
       species: {
-        type: new gql.GraphQLNonNull(speciesType),
+        type: new graphql.GraphQLNonNull(speciesType),
         description: 'The species of the character.'
       },
       name: {
-        type: gql.GraphQLString,
+        type: graphql.GraphQLString,
         description: 'The name of the character.'
       },
       friends: {
-        type: new gql.GraphQLList(characterInterface),
+        type: new graphql.GraphQLList(characterInterface),
         description: (
           'The friends of the character, '
           + 'or an empty list if they have none.'
@@ -110,7 +101,7 @@ characterInterface = new gql.GraphQLInterfaceType({
         }
       },
       appearsIn: {
-        type: new gql.GraphQLList(episodeType),
+        type: new graphql.GraphQLList(episodeType),
         description: 'Which movies they appear in.'
       }
     };
@@ -123,31 +114,31 @@ characterInterface = new gql.GraphQLInterfaceType({
   }
 });
 
-humanType = new gql.GraphQLObjectType({
+humanType = new graphql.GraphQLObjectType({
   name: 'Human',
   description: 'A humanoid creature in the Star Wars universe.',
   fields() {
     return {
       id: {
-        type: new gql.GraphQLNonNull(gql.GraphQLString),
+        type: new graphql.GraphQLNonNull(graphql.GraphQLString),
         description: 'The id of the human.',
         resolve(human) {
           return human._key;
         }
       },
       species: {
-        type: new gql.GraphQLNonNull(speciesType),
+        type: new graphql.GraphQLNonNull(speciesType),
         description: 'The species of the human.',
         resolve(human) {
           return human.$type;
         }
       },
       name: {
-        type: gql.GraphQLString,
+        type: graphql.GraphQLString,
         description: 'The name of the human.'
       },
       friends: {
-        type: new gql.GraphQLList(characterInterface),
+        type: new graphql.GraphQLList(characterInterface),
         description: 'The friends of the human, or an empty list if they have none.',
         args: {
           species: {
@@ -170,7 +161,7 @@ humanType = new gql.GraphQLObjectType({
         }
       },
       appearsIn: {
-        type: new gql.GraphQLList(episodeType),
+        type: new graphql.GraphQLList(episodeType),
         description: 'Which movies they appear in.',
         resolve(human) {
           // This query is similar to the friends query except
@@ -186,7 +177,7 @@ humanType = new gql.GraphQLObjectType({
         }
       },
       homePlanet: {
-        type: gql.GraphQLString,
+        type: graphql.GraphQLString,
         description: 'The home planet of the human, or null if unknown.'
       }
     };
@@ -198,31 +189,31 @@ humanType = new gql.GraphQLObjectType({
 // The "resolve" functions have to be implemented on the object
 // "implementing" the GraphQL interface, so we have to repeat
 // the full definition on both humans and droids.
-droidType = new gql.GraphQLObjectType({
+droidType = new graphql.GraphQLObjectType({
   name: 'Droid',
   description: 'A mechanical creature in the Star Wars universe.',
   fields() {
     return {
       id: {
-        type: new gql.GraphQLNonNull(gql.GraphQLString),
+        type: new graphql.GraphQLNonNull(graphql.GraphQLString),
         description: 'The id of the droid.',
         resolve(droid) {
           return droid._key;
         }
       },
       species: {
-        type: new gql.GraphQLNonNull(speciesType),
+        type: new graphql.GraphQLNonNull(speciesType),
         description: 'The species of the droid.',
         resolve(droid) {
           return droid.$type;
         }
       },
       name: {
-        type: gql.GraphQLString,
+        type: graphql.GraphQLString,
         description: 'The name of the droid.'
       },
       friends: {
-        type: new gql.GraphQLList(characterInterface),
+        type: new graphql.GraphQLList(characterInterface),
         description: 'The friends of the droid, or an empty list if they have none.',
         args: {
           species: {
@@ -241,7 +232,7 @@ droidType = new gql.GraphQLObjectType({
         }
       },
       appearsIn: {
-        type: new gql.GraphQLList(episodeType),
+        type: new graphql.GraphQLList(episodeType),
         description: 'Which movies they appear in.',
         resolve(droid) {
           return db._query(aql`
@@ -252,7 +243,7 @@ droidType = new gql.GraphQLObjectType({
         }
       },
       primaryFunction: {
-        type: gql.GraphQLString,
+        type: graphql.GraphQLString,
         description: 'The primary function of the droid.'
       }
     };
@@ -260,7 +251,7 @@ droidType = new gql.GraphQLObjectType({
   interfaces: [characterInterface]
 });
 
-const queryType = new gql.GraphQLObjectType({
+const queryType = new graphql.GraphQLObjectType({
   name: 'Query',
   fields() {
     return {
@@ -269,7 +260,7 @@ const queryType = new gql.GraphQLObjectType({
         args: {
           episode: {
             description: 'If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.',
-            type: gql.GraphQLString
+            type: graphql.GraphQLString
           }
         },
         resolve(root, args) {
@@ -284,7 +275,7 @@ const queryType = new gql.GraphQLObjectType({
         args: {
           id: {
             description: 'id of the human',
-            type: new gql.GraphQLNonNull(gql.GraphQLString)
+            type: new graphql.GraphQLNonNull(graphql.GraphQLString)
           }
         },
         resolve(root, args) {
@@ -301,7 +292,7 @@ const queryType = new gql.GraphQLObjectType({
         args: {
           id: {
             description: 'id of the droid',
-            type: new gql.GraphQLNonNull(gql.GraphQLString)
+            type: new graphql.GraphQLNonNull(graphql.GraphQLString)
           }
         },
         resolve(root, args) {
@@ -319,6 +310,6 @@ const queryType = new gql.GraphQLObjectType({
 // queries. See "controller.js" for an example of how it
 // is used. Also see the "test" folder for more in-depth
 // examples.
-export default new gql.GraphQLSchema({
+export default new graphql.GraphQLSchema({
   query: queryType
 });
