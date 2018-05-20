@@ -19,7 +19,7 @@ const resolvers = {
   },
 
   Episode: {
-    id: (obj, args, context) => obj._key,
+    id: (obj) => obj._key,
   },
 
   Character: {
@@ -32,11 +32,11 @@ const resolvers = {
   },
 
   Human: {
-    id: (obj, args, context) => obj._key,
+    id: (obj) => obj._key,
 
-    species: (obj, args, context) => obj.$type,
+    species: (obj) => obj.$type,
 
-    friends: (obj, args, context) => {
+    friends: (obj, args, context, info) => {
       // We want to store friendship relations as edges in an
       // edge collection. Here we're returning the friends of
       // a character with an AQL graph traversal query, see
@@ -50,7 +50,7 @@ const resolvers = {
       `).toArray();
     },
 
-    appearsIn: (obj, args, context) => {
+    appearsIn: (obj, args, context, info) => {
       // This query is similar to the friends query except
       // episode appearances are directional (a character
       // appears in an episode, but an episode does not
@@ -65,11 +65,11 @@ const resolvers = {
   },
 
   Droid: {
-    id: (obj, args, context) => obj._key,
+    id: (obj) => obj._key,
 
-    species: (obj, args, context) => obj.$type,
+    species: (obj) => obj.$type,
 
-    friends: (obj, args, context) => {
+    friends: (obj, args, context, info) => {
       const species = args.species || null;
       return db._query(aql`
         FOR friend IN ANY ${obj} ${friends}
@@ -79,7 +79,7 @@ const resolvers = {
       `).toArray();
     },
 
-    appearsIn: (obj, args, context) => {
+    appearsIn: (obj, args, context, info) => {
       return db._query(aql`
         FOR episode IN OUTBOUND ${obj._id} ${appearsIn}
         SORT episode._key ASC
@@ -89,13 +89,13 @@ const resolvers = {
   },
 
   Query: {
-    hero: (obj, args, context) => {
+    hero: (obj, args) => {
       return characters.document(
         args.episode === 'NewHope' ? '1000' :
           args.episode === 'Awakens' ? '2002' : '2001');
     },
 
-    human: (obj, args, context) => {
+    human: (obj, args, context, info) => {
       // We're using firstExample to make sure we only
       // return documents with the right "$type".
       return characters.firstExample({
@@ -104,7 +104,7 @@ const resolvers = {
       });
     },
 
-    droid: (obj, args, context) => {
+    droid: (obj, args, context, info) => {
       return characters.firstExample({
         _key: args.id,
         $type: 'droid'

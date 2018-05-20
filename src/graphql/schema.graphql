@@ -33,7 +33,10 @@ interface Character {
   name: String
 
   "The friends of the character, or an empty list if they have none."
-  friends(species: Species): [Character]!
+  friends(
+    "The species of the friends."
+    species: Species
+  ): [Character]!
 
   "Which movies they appear in."
   appearsIn: [Episode]
@@ -51,7 +54,10 @@ type Human implements Character {
   name: String
 
   "The friends of the human, or an empty list if they have none."
-  friends(species: Species): [Character]!
+  friends(
+    "The species of the friends."
+    species: Species
+  ): [Character]!
 
   "Which movies they appear in."
   appearsIn: [Episode]!
@@ -72,7 +78,10 @@ type Droid implements Character {
   name: String
 
   "The friends of the droid, or an empty list if they have none."
-  friends(species: Species): [Character]!
+  friends(
+    "The species of the friends."
+    species: Species
+  ): [Character]!
 
   "Which movies they appear in."
   appearsIn: [Episode]!
@@ -82,9 +91,23 @@ type Droid implements Character {
 }
 
 type Query {
-  hero(episode: String!): Character
-  human(id: String!): Human
-  droid(id: String!): Droid
+  hero(
+    """
+    If omitted, returns the hero of the whole saga.
+    If provided, returns the hero of that particular episode.
+    """
+    episode: String
+  ): Character
+
+  human(
+    "ID of the human."
+    id: String!
+  ): Human
+
+  droid(
+    "ID of the droid."
+    id: String!
+  ): Droid
 }
 
 schema {
