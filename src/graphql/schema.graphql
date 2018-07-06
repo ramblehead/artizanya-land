@@ -1,12 +1,98 @@
 # Hey Emacs, this is -*- coding: utf-8 -*-
 
-"Species of a character: human or droid."
-enum Species {
-  "A humanoid creature in the Star Wars universe."
-  HUMAN
+"How component comes into existence in Artizanya"
+enum ComponentGenesis {
+  """
+  Native to Artizanya land
+  Produced from other Artizanya components.
+  """
+  NATIVE
 
-  "A mechanical creature in the Star Wars universe."
-  DROID
+  """
+  Foreign to Artizanya land
+  Acquired from a third party suppler such as shop or manufacturer.
+  """
+  FOREIGN
+
+  """
+  Natural to the universe
+  Acquired directly from the nature.
+  """
+  NATURAL
+}
+
+"Role in the project tree"
+enum ComponentRole {
+  "Part of other components"
+  PART
+
+  "Consumable material in components production"
+  CONSUMABLE
+
+  "Instrument used in components production"
+  INSTRUMENT
+
+  "Byproduct"
+  BYPRODUCT
+
+  "Final product"
+  FINAL
+}
+
+interface Component {
+  id: String!
+  name: String
+  genesis: ComponentGenesis!
+  role: ComponentRole!
+}
+
+type NativeComponent implements Component {
+  id: String!
+  name: String
+  genesis: ComponentGenesis!
+  role: ComponentRole!
+  path: String!
+}
+
+type ForeignComponent implements Component {
+  id: String!
+  name: String
+  genesis: ComponentGenesis!
+  role: ComponentRole!
+  vendor: String!
+  product: String!
+}
+
+type NaturalComponent implements Component {
+  id: String!
+  name: String
+  genesis: ComponentGenesis!
+  role: ComponentRole!
+  method: String!
+}
+
+interface Process {
+  id: String!
+}
+
+type AssembleProcess implements Process {
+  id: String!
+  input: [Component]!
+  output: [NativeComponent!]!
+}
+
+type PurchaseOnlineProcess implements Process {
+  id: String!
+  store: String!
+  output: [Component!]!
+}
+
+interface Logistics {
+  id: String!
+}
+
+type DeliveryOnlineLogistics implements Logistics {
+  id: String!
 }
 
 "An episode in the Star Wars Trilogy."
@@ -113,39 +199,3 @@ type Query {
 schema {
   query: Query
 }
-
-# type Author {
-#   id: ID! # the ! means that every author object _must_ have an id
-#   firstName: String
-#   lastName: String
-#   """
-#   the list of Posts by this author
-#   """
-#   posts: [Post]
-# }
-
-# type Post {
-#   id: ID!
-#   title: String
-#   author: Author
-#   votes: Int
-# }
-
-# # the schema allows the following query:
-# type Query {
-#   posts: [Post]
-# }
-
-# # this schema allows the following mutation:
-# type Mutation {
-#   upvotePost (
-#     postId: ID!
-#   ): Post
-# }
-
-# # we need to tell the server which types represent the root query
-# # and root mutation types. We call them RootQuery and RootMutation by convention.
-# schema {
-#   query: Query
-#   mutation: Mutation
-# }
