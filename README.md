@@ -1,1 +1,2 @@
-# ArangoDB FOXX services in Typescript from Emacs
+Default ArangoDB web interface address:
+http://localhost:8529
