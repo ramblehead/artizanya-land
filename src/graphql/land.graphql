@@ -2,9 +2,10 @@
 
 interface Element {
   id: String!
-  name: String
-  process: Process!
-  alternatives: [Process]!
+  name: String!
+  directory: String!
+  processes: [Process!]!
+  alternatives: [Element]!
 }
 
 "How component comes into existence in Artizanya"
@@ -50,7 +51,7 @@ interface Component {
   id: String!
   element: Element!
   role: ComponentRole!
-  genesis: ComponentRole!
+  genesis: ComponentGenesis!
   count: Int!
   variants: [Element]!
 }
@@ -94,3 +95,18 @@ type PurchaseOnlineProcess implements Process {
   output: [Component!]!
 }
 
+type Project {
+  id: String
+  owner: String!
+  mainProcess: Process!
+}
+
+type Query {
+  project(
+    id: String
+  ): Project
+}
+
+schema {
+  query: Query
+}
