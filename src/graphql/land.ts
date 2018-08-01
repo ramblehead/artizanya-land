@@ -3,28 +3,57 @@
 let elements = [{
   id: '0001',
   name: '17HS4401',
+  description: '',
   vendor: 'MotionKing (China) Motor Industry',
-  directory: '0001',
-  processes: ['proc1_id', 'proc2_id', 'proc3_id'],
-  alternatives: []
+  directory: '0001'
+}, {
+  id: '0002',
+  name: '3D076',
+  description: 'GT2 20T Belt Pulley',
+  vendor: 'WODE',
+  directory: '0002'
+}, {
+  id: '0003',
+  name: '',
+  description: 'M3 30mm Cap Screw',
+  vendor: '',
+  directory: '0003'
+}, {
+  id: '0004',
+  name: '',
+  description: 'M3 12mm Cap Screw',
+  vendor: '',
+  directory: '0004'
+}, {
+  id: '0005',
+  name: '',
+  description: 'M3 Self Locking Nut',
+  vendor: '',
+  directory: '0005'
+}, {
+  id: '0006',
+  name: 'Xmotor, Leadscrews version',
+  description: '',
+  vendor: 'HTA3D',
+  directory: '0006'
 }];
 
-let elementCategories = [{
-  title: 'Electronic',
+let categories = [{
+  category: 'Electronic',
   children: [{
-    title: 'ADC',
+    category: 'ADC',
     description: 'Analogue-to-Digital Converters',
   }, {
-    title: 'DAC',
+    category: 'DAC',
     description: 'Digital-to-Analogue Converters',
   }]
 }, {
-  title: 'Electric Motors',
+  category: 'Electric Motors',
   description: 'Electric Motors, Motor Controllers & Peripherals',
   children: [{
-    title: 'Stepper Motors',
+    category: 'Stepper Motors',
     children: [{
-      title: 
+      element: '0001'
     }]
   }]
 }];
