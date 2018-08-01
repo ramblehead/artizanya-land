@@ -1,16 +1,33 @@
 // Hey Emacs, this is -*- coding: utf-8 -*-
 
-let elements = [
-  {
-    id: '0001',
-    name: '17HS4401',
-    directory: '0001',
-    processes: ['proc1_id', 'proc2_id', 'proc3_id'],
-    alternatives: []
-  }
-];
+let elements = [{
+  id: '0001',
+  name: '17HS4401',
+  vendor: 'MotionKing (China) Motor Industry',
+  directory: '0001',
+  processes: ['proc1_id', 'proc2_id', 'proc3_id'],
+  alternatives: []
+}];
 
-
+let elementCategories = [{
+  title: 'Electronic',
+  children: [{
+    title: 'ADC',
+    description: 'Analogue-to-Digital Converters',
+  }, {
+    title: 'DAC',
+    description: 'Digital-to-Analogue Converters',
+  }]
+}, {
+  title: 'Electric Motors',
+  description: 'Electric Motors, Motor Controllers & Peripherals',
+  children: [{
+    title: 'Stepper Motors',
+    children: [{
+      title: 
+    }]
+  }]
+}];
 
 import { db, aql } from '@arangodb';
 
