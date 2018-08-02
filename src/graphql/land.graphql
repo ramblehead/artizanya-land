@@ -5,7 +5,7 @@ interface Element {
   name: String!
   directory: String!
   processes: [Process!]!
-  alternatives: [Element]!
+  alternatives: [Element!]
 }
 
 "How component comes into existence in Artizanya"
@@ -52,7 +52,7 @@ interface Component {
   role: ComponentRole!
   genesis: ComponentGenesis!
   count: Int!
-  variants: [Element!]!
+  variants: [Element!]
 }
 
 "Type of the process"

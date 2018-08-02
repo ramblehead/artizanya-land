@@ -5,31 +5,38 @@ let elements = [{
   name: '17HS4401',
   description: '',
   vendor: 'MotionKing (China) Motor Industry',
+  alternatives: null,
 }, {
   id: '0002',
   name: '3D076',
   description: 'GT2 20T Belt Pulley',
   vendor: 'WODE',
+  alternatives: null,
 }, {
   id: '0003',
   name: '',
   description: 'M3 30mm Cap Screw',
   vendor: '',
+  alternatives: null,
 }, {
   id: '0004',
   name: '',
   description: 'M3 12mm Cap Screw',
   vendor: '',
+  alternatives: null,
 }, {
   id: '0005',
   name: '',
   description: 'M3 Self Locking Nut',
   vendor: '',
+  alternatives: null,
 }, {
   id: '0006',
   name: 'Xmotor, Leadscrews version',
   description: '',
   vendor: 'HTA3D',
+  processes: ['processes/0001'],
+  alternatives: null,
 }];
 
 class ComponentGenesis {
@@ -46,26 +53,26 @@ class ComponentRole {
   static readonly PRODUCT    = 4;
 }
 
-let assemblyProcesses = [{
+let processes = [{
   id: '0001',
   name: 'Xmotor, Leadscrews version',
   description: 'Manual assembly of Xmotor, Leadscrews version',
   vendor: 'ramblehead',
   output: [{
-    element: '0006',
+    element: 'elements/0006',
     role: ComponentRole.PRODUCT,
     genesis: ComponentGenesis.NATIVE,
     count: 1,
   }],
   input: [{
-    element: '0001',
-    variants: ['0001'],
+    element: 'elements/0001',
+    variants: null,
     role: ComponentRole.PART,
     genesis: ComponentGenesis.FOREIGN,
     count: 1,
   }, {
-    element: '0002',
-    variants: ['0002'],
+    element: 'elements/0002',
+    variants: null,
     role: ComponentRole.PART,
     genesis: ComponentGenesis.FOREIGN,
     count: 1,
