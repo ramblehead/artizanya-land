@@ -5,37 +5,71 @@ let elements = [{
   name: '17HS4401',
   description: '',
   vendor: 'MotionKing (China) Motor Industry',
-  directory: '0001'
 }, {
   id: '0002',
   name: '3D076',
   description: 'GT2 20T Belt Pulley',
   vendor: 'WODE',
-  directory: '0002'
 }, {
   id: '0003',
   name: '',
   description: 'M3 30mm Cap Screw',
   vendor: '',
-  directory: '0003'
 }, {
   id: '0004',
   name: '',
   description: 'M3 12mm Cap Screw',
   vendor: '',
-  directory: '0004'
 }, {
   id: '0005',
   name: '',
   description: 'M3 Self Locking Nut',
   vendor: '',
-  directory: '0005'
 }, {
   id: '0006',
   name: 'Xmotor, Leadscrews version',
   description: '',
   vendor: 'HTA3D',
-  directory: '0006'
+}];
+
+class ComponentGenesis {
+  static readonly NATIVE  = 0;
+  static readonly FOREIGN = 1;
+  static readonly NATURAL = 2;
+}
+
+class ComponentRole {
+  static readonly PART       = 0;
+  static readonly CONSUMABLE = 1;
+  static readonly INSTRUMENT = 2;
+  static readonly BYPRODUCT  = 3;
+  static readonly PRODUCT    = 4;
+}
+
+let assemblyProcesses = [{
+  id: '0001',
+  name: 'Xmotor, Leadscrews version',
+  description: 'Manual assembly of Xmotor, Leadscrews version',
+  vendor: 'ramblehead',
+  output: [{
+    element: '0006',
+    role: ComponentRole.PRODUCT,
+    genesis: ComponentGenesis.NATIVE,
+    count: 1,
+  }],
+  input: [{
+    element: '0001',
+    variants: ['0001'],
+    role: ComponentRole.PART,
+    genesis: ComponentGenesis.FOREIGN,
+    count: 1,
+  }, {
+    element: '0002',
+    variants: ['0002'],
+    role: ComponentRole.PART,
+    genesis: ComponentGenesis.FOREIGN,
+    count: 1,
+  }]
 }];
 
 let categories = [{
@@ -52,6 +86,7 @@ let categories = [{
   description: 'Electric Motors, Motor Controllers & Peripherals',
   children: [{
     category: 'Stepper Motors',
+    description: '',
     children: [{
       element: '0001'
     }]

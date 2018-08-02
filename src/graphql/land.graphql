@@ -44,16 +44,15 @@ enum ComponentRole {
   BYPRODUCT
 
   "Final product"
-  FINAL
+  PRODUCT
 }
 
 interface Component {
-  id: String!
   element: Element!
   role: ComponentRole!
   genesis: ComponentGenesis!
   count: Int!
-  variants: [Element]!
+  variants: [Element!]!
 }
 
 "Type of the process"
