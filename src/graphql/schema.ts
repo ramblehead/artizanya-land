@@ -4,13 +4,10 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { makeExecutableSchema } from 'graphql-tools';
 
-import resolvers from './resolvers';
-
-// const schemaString =
-//   fs.readFileSync('/home/ramblehead/artizanya/land/src/graphql/schema.graphql', 'utf8');
+import resolvers from './land_resolvers';
 
 const schemaString =
-  fs.readFileSync(path.resolve(__dirname, 'schema.graphql'), 'utf8');
+  fs.readFileSync(path.resolve(__dirname, 'land.graphql'), 'utf8');
 
 const schemaExequtable = makeExecutableSchema({
   typeDefs: schemaString,

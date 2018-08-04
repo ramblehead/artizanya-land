@@ -1,109 +1,17 @@
 # Hey Emacs, this is -*- coding: utf-8 -*-
 
-interface Element {
+type Element {
   id: String!
   name: String!
-  directory: String!
-  processes: [Process!]!
+  description: String!
+  processes: [String]!
   alternatives: [Element!]
 }
 
-"How component comes into existence in Artizanya"
-enum ComponentGenesis {
-  """
-  Native to Artizanya land
-  Produced from other Artizanya components.
-  """
-  NATIVE
-
-  """
-  Foreign to Artizanya land
-  Acquired from a third party suppler such as shop or manufacturer.
-  """
-  FOREIGN
-
-  """
-  Natural to the universe
-  Acquired directly from the nature.
-  """
-  NATURAL
-}
-
-"Role in the project tree"
-enum ComponentRole {
-  "Part of other components"
-  PART
-
-  "Consumable material in components production"
-  CONSUMABLE
-
-  "Instrument used in components production"
-  INSTRUMENT
-
-  "Byproduct"
-  BYPRODUCT
-
-  "Final product"
-  PRODUCT
-}
-
-interface Component {
-  element: Element!
-  role: ComponentRole!
-  genesis: ComponentGenesis!
-  count: Int!
-  variants: [Element!]
-}
-
-"Type of the process"
-enum ProcessType {
-  "Assemble Component"
-  ASSEMBLE
-
-  "Store Component"
-  STORE
-
-  "Purchase Component Online"
-  PURCHASE_ONLINE
-}
-
-interface Process {
-  id: String!
-  type: ProcessType!
-  output: [Component!]!
-}
-
-type AssembleProcess implements Process {
-  id: String!
-  type: ProcessType!
-  input: [Component]!
-  output: [NativeComponent!]!
-}
-
-type StoreProcess implements Process {
-  id: String!
-  type: ProcessType!
-  location: String!
-  output: [Component!]!
-}
-
-type PurchaseOnlineProcess implements Process {
-  id: String!
-  type: ProcessType!
-  store: String!
-  output: [Component!]!
-}
-
-type Project {
-  id: String
-  owner: String!
-  mainProcess: Process!
-}
-
 type Query {
-  project(
-    id: String
-  ): Project
+  element(
+    id: String!
+  ): Element
 }
 
 schema {

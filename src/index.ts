@@ -11,7 +11,7 @@ const router = createGraphqlRouter({
   schema: schemaExequtable,
   graphiql: true,
   graphql: graphql,
-}).summary('GraphQL endpoint')
-  .description('GraphQL endpoint for the Star Wars GraphQL example.');
+}).summary('GraphQL Endpoint')
+  .description('GraphQL endpoint for the Artizanya Land.');
 
 module.context.use(router);
