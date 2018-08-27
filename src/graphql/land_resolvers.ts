@@ -14,7 +14,14 @@ const resolvers = {
       return elements.firstExample({
         _key: args.id
       });
-    }
+    },
+
+    elementIds: (obj, args, context, info) => {
+      return db._query(aql`
+        FOR entry IN ${elements}
+        RETURN entry._key
+      `);
+    },
   }
 };
 

@@ -12,6 +12,8 @@ type Query {
   element(
     id: String!
   ): Element
+
+  elementIds: [String!]
 }
 
 schema {

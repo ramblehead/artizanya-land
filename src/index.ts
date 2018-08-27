@@ -1,9 +1,8 @@
 // -*- coding: utf-8 -*-
 
-import * as graphql from 'graphql';
-// import { makeExecutableSchema } from 'graphql-tools';
-
 import * as createGraphqlRouter from '@arangodb/foxx/graphql';
+
+import * as graphql from 'graphql';
 
 import schemaExequtable from './graphql/schema';
 
