@@ -16,7 +16,8 @@
 (let ((project-root (rh-project-get-root))
       file-rpath)
   (when project-root
-    (setq file-rpath (file-relative-name buffer-file-name project-root))
+    (setq file-rpath (abbreviate-file-name
+                      (expand-file-name buffer-file-name project-root)))
     (cond ((string-match-p "\\.ts\\'\\|\\.tsx\\'" file-rpath)
            (rh-setup-typescript-tide))
           ((or (string-match-p "^#!.*node" (save-excursion
