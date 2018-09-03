@@ -4,8 +4,9 @@ type Element {
   id: String!
   name: String!
   description: String!
-  processes: [String]!
-  alternatives: [Element]!
+  origin: String!,
+  processes: [String!]!
+  alternatives: [Element!]!
 }
 
 type Query {
@@ -13,7 +14,7 @@ type Query {
     id: String!
   ): Element
 
-  elementIds: [String]!
+  elements: [Element!]!
 }
 
 schema {
