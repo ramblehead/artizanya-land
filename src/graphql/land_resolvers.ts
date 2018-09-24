@@ -6,7 +6,7 @@ const elements = module.context.collection('elements');
 
 const resolvers = {
   Element: {
-    id: (obj) => obj._key
+    id: (obj, args, context, info) => obj._key
   },
 
   Query: {
@@ -16,10 +16,10 @@ const resolvers = {
       });
     },
 
-    elementIds: (obj, args, context, info) => {
+    elements: (obj, args, context, info) => {
       return db._query(aql`
-        FOR entry IN ${elements}
-        RETURN entry._key
+        FOR element IN ${elements}
+        RETURN element
       `);
     },
   }

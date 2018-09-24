@@ -3,13 +3,8 @@
 (set (make-local-variable 'tide-tsserver-executable)
      (concat (rh-project-get-root) "node_modules/.bin/tsserver"))
 
-;; (set (make-local-variable 'tern-command)
-;;      (list (concat (rh-project-get-root) "node_modules/.bin/tern")))
-
 (set (make-local-variable 'flycheck-typescript-tslint-executable)
      (concat (rh-project-get-root) "node_modules/.bin/tslint"))
-
-;; (set (make-local-variable 'rh-tern-argument-hints-enabled) nil)
 
 ;; TODO: Test NODE_PATH and only add missing paths instead
 ;;       of overwriting all.
@@ -21,7 +16,8 @@
 (let ((project-root (rh-project-get-root))
       file-rpath)
   (when project-root
-    (setq file-rpath (file-relative-name buffer-file-name project-root))
+    (setq file-rpath (abbreviate-file-name
+                      (expand-file-name buffer-file-name project-root)))
     (cond ((string-match-p "\\.ts\\'\\|\\.tsx\\'" file-rpath)
            (rh-setup-typescript-tide))
           ((or (string-match-p "^#!.*node" (save-excursion
