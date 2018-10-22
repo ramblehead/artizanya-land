@@ -13,7 +13,7 @@ interface Element {
 
 const elementsArray: Element[] = [
   {
-    _key: '0001',
+    _key: '0000',
     name: '17HS4401',
     description: '',
     origin: 'MotionKing (China) Motor Industry',
@@ -21,7 +21,7 @@ const elementsArray: Element[] = [
     alternatives: [],
   },
   {
-    _key: '0002',
+    _key: '0001',
     name: '3D076',
     description: 'GT2 20T Belt Pulley',
     origin: 'WODE',
@@ -29,7 +29,7 @@ const elementsArray: Element[] = [
     alternatives: [],
   },
   {
-    _key: '0003',
+    _key: '0002',
     name: 'M3 30mm Cap Screw',
     description: 'M3 30mm Cap Screw',
     origin: '',
@@ -37,7 +37,7 @@ const elementsArray: Element[] = [
     alternatives: [],
   },
   {
-    _key: '0004',
+    _key: '0003',
     name: 'M3 12mm Cap Screw',
     description: 'M3 12mm Cap Screw',
     origin: '',
@@ -45,7 +45,7 @@ const elementsArray: Element[] = [
     alternatives: [],
   },
   {
-    _key: '0005',
+    _key: '0004',
     name: 'M3 Self Locking Nut',
     description: 'M3 Self Locking Nut',
     origin: '',
@@ -53,7 +53,7 @@ const elementsArray: Element[] = [
     alternatives: [],
   },
   {
-    _key: '0006',
+    _key: '0005',
     name: 'LM8UU',
     description: '8mm Linear Ball Bearing',
     origin: '',
@@ -61,7 +61,7 @@ const elementsArray: Element[] = [
     alternatives: [],
   },
   {
-    _key: '0007',
+    _key: '0006',
     name: 'X Motor Printed Part, Leadscrews',
     description: '',
     processes: [],
@@ -69,7 +69,7 @@ const elementsArray: Element[] = [
     alternatives: [],
   },
   {
-    _key: '0008',
+    _key: '0007',
     name: 'Xmotor Assembly, Leadscrews',
     description: '',
     origin: 'HTA3D',
@@ -77,6 +77,30 @@ const elementsArray: Element[] = [
     alternatives: [],
   }
 ];
+
+interface Input {
+  _key: string;
+  count: number;
+  element: Element;
+}
+
+interface Output {
+  _key: string;
+  count: number;
+  element: Element;
+}
+
+interface Process {
+  _key: string;
+  name: string;
+  description: string;
+  // tools: any[];
+  // skills: any[];
+  outputs: Input[];
+  inputs: Output[];
+  // origin: string;
+  alternatives: Process[];
+}
 
 // let categories = [{
 //   category: 'Electronic',
@@ -176,6 +200,31 @@ if(!db._collection(elementsCollectionName)) {
     elements.save(element);
   });
 }
-else if (module.context.isProduction)
+else if(module.context.isProduction) {
   console.warn(`collection ${elementsCollectionName} \
 already exists. Leaving it untouched.`);
+}
+
+const elementsOrderCollectionName = module.context.collectionName('elementsOrder');
+if(!db._collection(elementsOrderCollectionName)) {
+  const elementsOrder = db._createEdgeCollection(elementsOrderCollectionName);
+  [
+    ['0000', '0001'],
+    ['0001', '0002'],
+    ['0002', '0003'],
+    ['0003', '0004'],
+    ['0004', '0005'],
+    ['0005', '0006'],
+    ['0006', '0007'],
+  ].forEach(pair => {
+    elementsOrder.save(
+      elementsCollectionName + '/' + pair[0],
+      elementsCollectionName + '/' + pair[1],
+      {}
+    );
+  });
+}
+else if(module.context.isProduction) {
+  console.warn(`collection ${elementsOrderCollectionName} \
+already exists. Leaving it untouched.`);
+}

@@ -12,7 +12,7 @@
             true,
             "check-space"
         ],
-        "curly": [ true, "as-needed" ],
+        "curly": [ true, "ignore-same-line" ],
         "eofline": true,
         "linebreak-style": [true, "LF"],
         "forin": true,
@@ -49,14 +49,14 @@
         "no-shadowed-variable": true,
         "no-string-literal": true,
         "no-switch-case-fall-through": true,
-        "no-trailing-whitespace": false,
+        "no-trailing-whitespace": true,
         "no-unused-expression": true,
         "no-use-before-declare": true,
         "one-line": [
             true,
             "check-catch",
             // "check-else",
-            "check-open-brace",
+            // "check-open-brace",
             "check-whitespace"
         ],
         "quotemark": [true, "single"],
